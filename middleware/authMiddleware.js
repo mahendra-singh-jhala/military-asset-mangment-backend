@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 // Load environment variables
 require("dotenv").config();
 
+// middleware user signIn
 exports.signIn = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -31,50 +32,22 @@ exports.signIn = async (req, res, next) => {
     }
 }
 
-exports.isAdmin = async (req, res, next) => {
-    const userId = req.user.userId
-    try {
-        const user = await User.findById(userId);
-        if (user.role !== "Admin") {
-            return res.status(401).send("Unauthorized");
+// middleware user role based access
+exports.rolesBasedAccess = (...roles) => {
+    return async (req, res, next) => {
+        try {
+            const user = await User.findById(req.user.userId);
+            if (!user || !roles.includes(user.role)) {
+                return res.status(403).json({
+                    message: "Unauthorized"
+                })
+            }
+            next();
+        } catch (error) {
+            return res.status(500).json({
+                message: "Internal Server Error",
+                error: error.message
+            });
         }
-        next();
-    } catch (error) {
-        res.status(401).json({ 
-            message: "Invalid token", 
-            error: error.message 
-        });
-    }
-}
-
-exports.isBaseCommander = async (req, res, next) => {
-    const userId = req.user.userId
-    try {
-        const user = await User.findById(userId);
-        if (user.role !== "BaseCommander") {
-            return res.status(401).send("Unauthorized");
-        }
-        next();
-    } catch (error) {
-        res.status(401).json({ 
-            message: "Invalid token", 
-            error: error.message 
-        });
-    }
-}
-
-exports.isLogisticsOfficer =  async (req, res, next) => {
-    const userId = req.user.userId
-    try {
-        const user = await User.findById(userId);
-        if (user.role !== "LogisticsOfficer") {
-            return res.status(401).send("Unauthorized");
-        }
-        next();
-    } catch (error) {
-        res.status(401).json({ 
-            message: "Invalid token", 
-            error: error.message 
-        });
-    }
-}
+    };
+};
