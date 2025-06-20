@@ -6,7 +6,7 @@ URL = https://documenter.getpostman.com/view/38758930/2sB2xBCptH
 <!-- Check upper Link -->
 Example : -
 
-<!-- Request -->
+### Request 
 ```
 curl --location 'localhost:5000/api/user' \
 --data-raw '{
@@ -17,7 +17,7 @@ curl --location 'localhost:5000/api/user' \
 }'
 ```
 
-<!-- Response -->
+### Response
 ```
 {
   "message": "User registered successfully and cart created",
