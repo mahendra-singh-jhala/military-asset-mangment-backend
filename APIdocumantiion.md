@@ -7,6 +7,7 @@ URL = https://documenter.getpostman.com/view/38758930/2sB2xBCptH
 Example : -
 
 <!-- Request -->
+```
 curl --location 'localhost:5000/api/user' \
 --data-raw '{
     "name": "Manipal Singh",
@@ -14,8 +15,10 @@ curl --location 'localhost:5000/api/user' \
     "password": "manipalsingh444",
     "role": "Admin"
 }'
+```
 
 <!-- Response -->
+```
 {
   "message": "User registered successfully and cart created",
   "user": {
@@ -29,3 +32,4 @@ curl --location 'localhost:5000/api/user' \
     "__v": 0
   }
 }
+```
