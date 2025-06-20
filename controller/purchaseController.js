@@ -29,3 +29,23 @@ exports.createOrder = async (req, res) => {
         })
     }
 }
+
+exports.getOrderById = async (req, res) => {
+    const baseId = req.params.id
+    try {
+        const order = await Purchase.find({ assetbaseId: baseId })
+            .populate("asset")
+            .populate("assetbaseId")
+            .populate("baseId")
+        
+        res.status(200).json({
+            message: "Order fetch successfully",
+            order
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error to fetch Order",
+            error: error.message
+        })
+    }
+}

@@ -14,7 +14,7 @@ router.get("/",signIn, rolesBasedAccess("Admin"), baseController.getBase)
 
 // BaseCommander, LogisticsOfficer Route
 // route to get base by Id
-router.get("/:id", signIn, rolesBasedAccess("BaseCommander", "LogisticsOfficer"),  baseController.getBaseById)
+router.get("/:id", signIn, rolesBasedAccess("BaseCommander", "LogisticsOfficer", "Admin"),  baseController.getBaseById)
 
 
 module.exports = router

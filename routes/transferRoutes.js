@@ -6,6 +6,6 @@ const router = express.Router();
 
 // LogisticsOfficer Route
 // route to tranfser asset
-router.post("/", signIn, rolesBasedAccess("LogisticsOfficer"), transferController.transferAsset)
+router.post("/", signIn, rolesBasedAccess("LogisticsOfficer", "Admin"), transferController.transferAsset)
 
 module.exports = router

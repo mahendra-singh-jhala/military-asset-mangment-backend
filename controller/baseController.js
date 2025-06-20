@@ -28,7 +28,7 @@ exports.getBase = async (req, res) => {
         const bases = await Base.find()
             .populate("user")
             .populate("asset")
-            .populate({ path: "purchases", populate: { path: "asset" }})
+            .populate({ path: "purchases", populate: [{ path: "asset" }, { path: "assetbaseId" }] })
             .populate({ path: "transfer", populate: [{ path: "toBase" }, { path: "fromBase" }, { path: "purchase" }] })
         res.status(200).json({
             message: "Bases fetch Successfully",
@@ -48,8 +48,8 @@ exports.getBaseById = async (req, res) => {
         const base = await Base.findById({ _id: BaseId })
             .populate("user")
             .populate("asset")
-            .populate({ path: "purchases", populate: { path: "asset" }})
-            .populate({ path: "transfer", populate: [{ path: "toBase" }, { path: "fromBase" }, { path: "purchase" }] })
+            .populate({ path: "purchases", populate: [{ path: "asset" }, { path: "assetbaseId" }] })
+            .populate({ path: "transfer", populate: [{ path: "toBase" }, { path: "fromBase" }, { path: "purchase", populate: {path: "asset"} }] })
         if(!base) {
             return res.status(400).json({
                 message: "base Not Found"

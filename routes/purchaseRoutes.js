@@ -8,6 +8,7 @@ const router = express.Router();
 // route to create order
 router.post("/", signIn, rolesBasedAccess("LogisticsOfficer"), purchaseController.createOrder)
 
-
+// route to get order
+router.get("/:id", signIn, rolesBasedAccess("LogisticsOfficer", "Admin"), purchaseController.getOrderById)
 
 module.exports = router

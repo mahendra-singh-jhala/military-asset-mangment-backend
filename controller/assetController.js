@@ -28,3 +28,20 @@ exports.createAsset = async (req, res) => {
         })
     }
 }
+
+exports.getAllAsset = async (req, res) => {
+    try {
+        const asset = await Asset.find()
+            .populate("base")
+
+        res.status(200).json({
+            message: "Asset fetch succesfully",
+            asset
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Error to fetch All Asset",
+            error: error.message
+        })
+    }
+}

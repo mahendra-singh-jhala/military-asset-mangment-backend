@@ -16,6 +16,10 @@ exports.transferAsset = async (req, res) => {
             $push: { transfer: newTransferAsset._id }
         })
 
+        await Base.findByIdAndUpdate(toBaseId, {
+            $push: { transfer: newTransferAsset._id }
+        })
+
         res.status(200).json({
             message: "Transfer asset successfully",
             newTransferAsset
